@@ -6,6 +6,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 )
 
+//go:generate go tool mockgen -source=ec2.go -destination=mocks/mock_ec2.go -package=mocks EC2API
+
 // EC2API defines methods to use from the api
 type EC2API interface {
 	DescribeRegions(ctx context.Context, input *ec2.DescribeRegionsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeRegionsOutput, error)
@@ -83,79 +85,4 @@ func (c *EC2Client) DescribeNetworkAcls(ctx context.Context, input *ec2.Describe
 
 func (c *EC2Client) DeleteNetworkAcl(ctx context.Context, input *ec2.DeleteNetworkAclInput, optFns ...func(*ec2.Options)) (*ec2.DeleteNetworkAclOutput, error) {
 	return c.Client.DeleteNetworkAcl(ctx, input, optFns...)
-}
-
-// Mocks
-// MockEC2Client a mock implementation of EC2API
-type MockEC2Client struct {
-	describeRegionsFunc          func(ctx context.Context, input *ec2.DescribeRegionsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeRegionsOutput, error)
-	describeVpcsFunc             func(ctx context.Context, input *ec2.DescribeVpcsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeVpcsOutput, error)
-	deleteVpcFunc                func(ctx context.Context, input *ec2.DeleteVpcInput, optFns ...func(*ec2.Options)) (*ec2.DeleteVpcOutput, error)
-	describeSubnetsFunc          func(ctx context.Context, input *ec2.DescribeSubnetsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeSubnetsOutput, error)
-	deleteSubnetFunc             func(ctx context.Context, input *ec2.DeleteSubnetInput, optFns ...func(*ec2.Options)) (*ec2.DeleteSubnetOutput, error)
-	describeRouteTablesFunc      func(ctx context.Context, input *ec2.DescribeRouteTablesInput, optFns ...func(*ec2.Options)) (*ec2.DescribeRouteTablesOutput, error)
-	deleteRouteTableFunc         func(ctx context.Context, input *ec2.DeleteRouteTableInput, optFns ...func(*ec2.Options)) (*ec2.DeleteRouteTableOutput, error)
-	describeInternetGatewaysFunc func(ctx context.Context, input *ec2.DescribeInternetGatewaysInput, optFns ...func(*ec2.Options)) (*ec2.DescribeInternetGatewaysOutput, error)
-	detachInternetGatewayFunc    func(ctx context.Context, input *ec2.DetachInternetGatewayInput, optFns ...func(*ec2.Options)) (*ec2.DetachInternetGatewayOutput, error)
-	deleteInternetGatewayFunc    func(ctx context.Context, input *ec2.DeleteInternetGatewayInput, optFns ...func(*ec2.Options)) (*ec2.DeleteInternetGatewayOutput, error)
-	describeSecurityGroupsFunc   func(ctx context.Context, input *ec2.DescribeSecurityGroupsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeSecurityGroupsOutput, error)
-	deleteSecurityGroupFunc      func(ctx context.Context, input *ec2.DeleteSecurityGroupInput, optFns ...func(*ec2.Options)) (*ec2.DeleteSecurityGroupOutput, error)
-	describeNetworkAclsFunc      func(ctx context.Context, input *ec2.DescribeNetworkAclsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeNetworkAclsOutput, error)
-	deleteNetworkAclFunc         func(ctx context.Context, input *ec2.DeleteNetworkAclInput, optFns ...func(*ec2.Options)) (*ec2.DeleteNetworkAclOutput, error)
-}
-
-func (m *MockEC2Client) DescribeRegions(ctx context.Context, input *ec2.DescribeRegionsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeRegionsOutput, error) {
-	return m.describeRegionsFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DescribeVpcs(ctx context.Context, input *ec2.DescribeVpcsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeVpcsOutput, error) {
-	return m.describeVpcsFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DeleteVpc(ctx context.Context, input *ec2.DeleteVpcInput, optFns ...func(*ec2.Options)) (*ec2.DeleteVpcOutput, error) {
-	return m.deleteVpcFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DescribeSubnets(ctx context.Context, input *ec2.DescribeSubnetsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeSubnetsOutput, error) {
-	return m.describeSubnetsFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DeleteSubnet(ctx context.Context, input *ec2.DeleteSubnetInput, optFns ...func(*ec2.Options)) (*ec2.DeleteSubnetOutput, error) {
-	return m.deleteSubnetFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DescribeRouteTables(ctx context.Context, input *ec2.DescribeRouteTablesInput, optFns ...func(*ec2.Options)) (*ec2.DescribeRouteTablesOutput, error) {
-	return m.describeRouteTablesFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DeleteRouteTable(ctx context.Context, input *ec2.DeleteRouteTableInput, optFns ...func(*ec2.Options)) (*ec2.DeleteRouteTableOutput, error) {
-	return m.deleteRouteTableFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DescribeInternetGateways(ctx context.Context, input *ec2.DescribeInternetGatewaysInput, optFns ...func(*ec2.Options)) (*ec2.DescribeInternetGatewaysOutput, error) {
-	return m.describeInternetGatewaysFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DetachInternetGateway(ctx context.Context, input *ec2.DetachInternetGatewayInput, optFns ...func(*ec2.Options)) (*ec2.DetachInternetGatewayOutput, error) {
-	return m.detachInternetGatewayFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DeleteInternetGateway(ctx context.Context, input *ec2.DeleteInternetGatewayInput, optFns ...func(*ec2.Options)) (*ec2.DeleteInternetGatewayOutput, error) {
-	return m.deleteInternetGatewayFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DescribeSecurityGroups(ctx context.Context, input *ec2.DescribeSecurityGroupsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeSecurityGroupsOutput, error) {
-	return m.describeSecurityGroupsFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DeleteSecurityGroup(ctx context.Context, input *ec2.DeleteSecurityGroupInput, optFns ...func(*ec2.Options)) (*ec2.DeleteSecurityGroupOutput, error) {
-	return m.deleteSecurityGroupFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DescribeNetworkAcls(ctx context.Context, input *ec2.DescribeNetworkAclsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeNetworkAclsOutput, error) {
-	return m.describeNetworkAclsFunc(ctx, input, optFns...)
-}
-
-func (m *MockEC2Client) DeleteNetworkAcl(ctx context.Context, input *ec2.DeleteNetworkAclInput, optFns ...func(*ec2.Options)) (*ec2.DeleteNetworkAclOutput, error) {
-	return m.deleteNetworkAclFunc(ctx, input, optFns...)
 }
