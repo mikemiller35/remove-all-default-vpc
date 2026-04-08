@@ -1,0 +1,21 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.9",
+  "base_commit_sha": "1a8291ff0556090bc984ea89be2a2d25869f4ed0",
+  "prompts": {
+    "48509614deae6fad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3a25cbb0-64f7-42f6-8ada-cf09eefd8baf",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Mike Miller <mike.miller@getgarner.com>",
+      "messages": [],
+      "total_additions": 41,
+      "total_deletions": 0,
+      "accepted_lines": 41,
+      "overriden_lines": 0
+    }
+  }
+}
